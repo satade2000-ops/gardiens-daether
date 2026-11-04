@@ -52,6 +52,10 @@ function VirtualStick({ kind, label }: { kind: "move" | "aim"; label: string }) 
     else dispatch("aether-aim", { x: 0, z: 0, firing: false });
   };
   return (
+    <div className="personal-record">
+  🏆 RECORD PERSONNEL :{" "}
+  <strong>{bestScore.toLocaleString("fr-FR")}</strong>
+</div>
     <div className={`virtual-stick ${kind}`} ref={base}
       onPointerDown={(e) => { e.preventDefault(); active.current = e.pointerId; e.currentTarget.setPointerCapture(e.pointerId); update(e.clientX, e.clientY); }}
       onPointerMove={(e) => { if (active.current === e.pointerId) update(e.clientX, e.clientY); }}
