@@ -71,6 +71,13 @@ export default function Home() {
   const gameRef = useRef<AetherGame | null>(null);
   const [snapshot, setSnapshot] = useState<GameSnapshot>(INITIAL);
   const [bestScore, setBestScore] = useState<number>(getBestScore);
+  const unlockedRewards = REWARDS.filter(
+  (reward) => bestScore >= reward.score
+);
+
+const nextReward = REWARDS.find(
+  (reward) => bestScore < reward.score
+);
   const REWARDS = [
   { name: "Bronze", score: 1000, icon: "🥉" },
   { name: "Argent", score: 5000, icon: "🥈" },
