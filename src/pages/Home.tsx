@@ -5,7 +5,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { trpc } from "@/providers/trpc";
 import type { AetherGame } from "@/game/AetherGame";
 import type { GameSnapshot } from "@/game/types";
+const BEST_SCORE_KEY = "aether_best_score";
 
+function getBestScore(): number {
+  try {
+    return Number(localStorage.getItem(BEST_SCORE_KEY)) || 0;
+  } catch {
+    return 0;
+  }
+}
 const INITIAL: GameSnapshot = {
   state: "title", hp: 100, maxHp: 100, energy: 100, maxEnergy: 100, wave: 1,
   score: 0, combo: 1, shards: 0, kills: 0, elapsed: 0, enemies: 0,
@@ -58,6 +66,7 @@ export default function Home() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const gameRef = useRef<AetherGame | null>(null);
   const [snapshot, setSnapshot] = useState<GameSnapshot>(INITIAL);
+  const [bestScore, setBestScore] = useState<number>(getBestScore);
   const game = gameRef.current;
   const auth = useAuth();
   const utils = trpc.useUtils();
@@ -87,7 +96,21 @@ export default function Home() {
     gameRef.current = startGame(canvas, setSnapshot);
     return () => { stopGame(); gameRef.current = null; };
   }, []);
+useEffect(() => {
+  if (!["victory", "gameover"].includes(snapshot.state)) return;
 
+  setBestScore((previous) => {
+    const best = Math.max(previous, snapshot.score);
+
+    try {
+      localStorage.setItem(BEST_SCORE_KEY, String(best));
+    } catch {
+      // La sauvegarde locale peut être indisponible.
+    }
+
+    return best;
+  });
+}, [snapshot.state, snapshot.score]);
   const playing = snapshot.state === "playing";
   return (
     <div id="game-root" className={`state-${snapshot.state}`}>
