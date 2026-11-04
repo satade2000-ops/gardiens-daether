@@ -71,6 +71,12 @@ export default function Home() {
   const gameRef = useRef<AetherGame | null>(null);
   const [snapshot, setSnapshot] = useState<GameSnapshot>(INITIAL);
   const [bestScore, setBestScore] = useState<number>(getBestScore);
+  const REWARDS = [
+  { name: "Bronze", score: 1000, icon: "🥉" },
+  { name: "Argent", score: 5000, icon: "🥈" },
+  { name: "Or", score: 10000, icon: "🥇" },
+  { name: "Diamant", score: 20000, icon: "💎" },
+];
   const game = gameRef.current;
   const auth = useAuth();
   const utils = trpc.useUtils();
