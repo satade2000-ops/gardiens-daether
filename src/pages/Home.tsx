@@ -165,6 +165,11 @@ useEffect(() => {
             <h1>LES GARDIENS<br /><em>D’AETHER</em></h1>
             <p className="title-description">Défends le sanctuaire suspendu. Maîtrise le flux, brise la corruption et libère l’île en quatre vagues.</p>
             <button className="primary-button play-button" onClick={() => game?.start()}>Entrer dans le sanctuaire <span>→</span></button>
+            {bestScore > 0 && (
+  <p className="personal-record">
+    🏆 Ton meilleur score : <strong>{bestScore.toLocaleString("fr-FR")}</strong>
+  </p>
+)}
             <small className="keyboard-start">ou appuie sur ESPACE</small>
           </section>
           <div className="title-sidebar">
