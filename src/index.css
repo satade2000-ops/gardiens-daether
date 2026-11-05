@@ -202,3 +202,35 @@ kbd { margin-right: 6px; padding: 4px 6px; border: 1px solid rgba(140,245,228,.2
   .upgrade-grid { grid-template-columns: repeat(3,1fr); }
   .upgrade-grid button { min-height: 150px; }
 }
+/* PANNEAU DES RÉCOMPENSES */
+.rewards-panel {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid rgba(255, 211, 108, .35);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(20, 57, 72, .95), rgba(12, 38, 52, .95));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .2);
+}
+
+.rewards-panel h3 {
+  margin: 0 0 14px;
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: .12em;
+}
+
+.rewards-panel p {
+  margin: 9px 0;
+  padding: 9px;
+  border-radius: 7px;
+  color: #d9eee8;
+  background: rgba(255, 255, 255, .05);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.rewards-panel p:last-child {
+  border: 1px solid rgba(255, 211, 108, .25);
+  color: var(--gold);
+  background: rgba(255, 211, 108, .08);
+}
