@@ -78,15 +78,45 @@ export function createEnemyModel(type: EnemyType): ActorModel {
   const glow = material(type === "shooter" ? 0xf1a2ff : type === "boss" ? COLORS.gold : 0xffdf9d, type === "boss" ? 0x6b4310 : 0x2c182c);
   let body: THREE.Mesh;
   if (type === "charger") {
-    body = mesh(new THREE.DodecahedronGeometry(0.72, 0), bodyMaterial, 0, 0.85, 0);
-    body.scale.set(1.15, 0.75, 1.25);
-    group.add(body);
-    for (const side of [-1, 1]) for (const z of [-0.42, 0.42]) {
-      const leg = mesh(new THREE.BoxGeometry(0.55, 0.18, 0.2), dark, side * 0.78, 0.5, z);
-      leg.rotation.z = side * 0.35; group.add(leg);
-    }
-    group.add(mesh(new THREE.ConeGeometry(0.22, 0.75, 5), glow, 0, 0.85, -0.95));
-    group.children[group.children.length - 1].rotation.x = -Math.PI / 2;
+  const skin = material(0x8b573b);
+  const armor = bodyMaterial;
+
+  // Torse
+  body = mesh(new THREE.BoxGeometry(0.78, 0.9, 0.42), armor, 0, 1.25, 0);
+  group.add(body);
+
+  // Tête
+  group.add(mesh(new THREE.SphereGeometry(0.28, 12, 10), skin, 0, 1.95, 0));
+
+  // Casque
+  group.add(mesh(new THREE.SphereGeometry(0.32, 10, 8, 0, Math.PI * 2, 0, Math.PI / 2), dark, 0, 2.05, 0));
+
+  // Visage : yeux
+  const eye = material(0xffffff);
+  group.add(mesh(new THREE.SphereGeometry(0.045, 8, 6), eye, -0.1, 1.97, -0.25));
+  group.add(mesh(new THREE.SphereGeometry(0.045, 8, 6), eye, 0.1, 1.97, -0.25));
+
+  // Épaulières
+  for (const side of [-1, 1]) {
+    group.add(mesh(new THREE.SphereGeometry(0.25, 8, 6), glow, side * 0.48, 1.55, 0));
+
+    // Bras
+    const arm = mesh(new THREE.CylinderGeometry(0.13, 0.16, 0.7, 8), skin, side * 0.53, 1.15, 0);
+    arm.rotation.z = side * -0.18;
+    group.add(arm);
+
+    // Jambes
+    const leg = mesh(new THREE.CylinderGeometry(0.15, 0.18, 0.7, 8), dark, side * 0.22, 0.48, 0);
+    group.add(leg);
+
+    // Bottes
+    group.add(mesh(new THREE.BoxGeometry(0.3, 0.2, 0.4), dark, side * 0.22, 0.15, -0.06));
+  }
+
+  // Épée
+  group.add(mesh(new THREE.BoxGeometry(0.1, 0.85, 0.12), glow, 0.82, 1.35, -0.08));
+  group.add(mesh(new THREE.BoxGeometry(0.35, 0.09, 0.14), dark, 0.82, 0.9, -0.08));
+  group.add(mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.25, 8), dark, 0.82, 0.78, -0.08));
   } else if (type === "shooter") {
     body = mesh(new THREE.OctahedronGeometry(0.82, 0), bodyMaterial, 0, 1.35, 0);
     group.add(body);
