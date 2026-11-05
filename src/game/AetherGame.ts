@@ -832,5 +832,6 @@ declare global {
     __aetherDebug?: {
       busy: () => void; boss: () => void; win: () => void; lose: () => void; upgrade: () => void;
       stats: () => { fps: number; calls: number; triangles: number; enemies: number; state: GameState };
-    );
+    };
   }
+}
