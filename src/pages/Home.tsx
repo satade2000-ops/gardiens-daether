@@ -74,11 +74,28 @@ export default function Home() {
   const gameRef = useRef<AetherGame | null>(null);
   const [snapshot, setSnapshot] = useState<GameSnapshot>(INITIAL);
   const [bestScore, setBestScore] = useState<number>(getBestScore);
+  const [rewardNotification, setRewardNotification] = useState<string | null>(null);
+const previousRewards = useRef<string[]>([]);
   const unlockedRewards = REWARDS.filter(
   (reward) => bestScore >= reward.score
 );
 
-const nextReward = REWARDS.find(
+const nextReward = REWARDS.find();
+  useEffect(() => {
+  const newlyUnlocked = unlockedRewards.filter(
+    (reward) => !previousRewards.current.includes(reward.name)
+  );
+
+  if (newlyUnlocked.length > 0) {
+    setRewardNotification(
+      `${newlyUnlocked[0].icon} Félicitations ! Trophée ${newlyUnlocked[0].name} débloqué !`
+    );
+
+    previousRewards.current = unlockedRewards.map(
+      (reward) => reward.name
+    );
+  }
+}, [bestScore]);
   (reward) => bestScore < reward.score
 );
   
@@ -131,6 +148,11 @@ useEffect(() => {
     <div id="game-root" className={`state-${snapshot.state}`}>
       <canvas id="game-canvas" ref={canvasRef} aria-label="Les Gardiens d’Aether, jeu d’action 3D" />
       <div id="ui-overlay">
+        {rewardNotification && (
+  <div className="reward-notification">
+    {rewardNotification}
+  </div>
+)}
         {(snapshot.state === "title" || snapshot.state === "victory" || snapshot.state === "gameover") && <div className="account-bar">
           {auth.isLoading ? <span>Connexion…</span> : auth.user ? <>
             <span className="account-dot" />
