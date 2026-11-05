@@ -82,8 +82,10 @@ const previousRewards = useRef<string[]>(
   const unlockedRewards = REWARDS.filter(
   (reward) => bestScore >= reward.score
 );
+    const nextReward = REWARDS.find(
+    (reward) => bestScore < reward.score
+  );
 
-const nextReward = REWARDS.find();
   useEffect(() => {
   const newlyUnlocked = unlockedRewards.filter(
     (reward) => !previousRewards.current.includes(reward.name)
@@ -97,10 +99,14 @@ const nextReward = REWARDS.find();
     previousRewards.current = unlockedRewards.map(
       (reward) => reward.name
     );
+
+    const timer = window.setTimeout(() => {
+      setRewardNotification(null);
+    }, 4000);
+
+    return () => window.clearTimeout(timer);
   }
 }, [bestScore]);
-  (reward) => bestScore < reward.score
-);
   
   const game = gameRef.current;
   const auth = useAuth();
