@@ -68,8 +68,8 @@ export class AetherGame {
   private machine = new GameStateMachine();
   private loop: GameLoop;
   private player: ActorModel;
-  private heroMixer?: THREE.AnimationMixer;
-private heroModel?: THREE.Group;
+    private heroMixer?: THREE.AnimationMixer;
+  private heroModel?: THREE.Group;
   private enemies: Enemy[] = [];
   private playerShots: Projectile[] = [];
   private enemyShots: Projectile[] = [];
@@ -203,6 +203,64 @@ private heroModel?: THREE.Group;
     }
   }
 
+    private loadHeroAsset(): void {
+    const loader = new GLTFLoader();
+
+    loader.load(
+      "/assets/hero/hero.glb",
+      (gltf) => {
+        const hero = gltf.scene;
+
+        hero.updateMatrixWorld(true);
+
+        const box = new THREE.Box3().setFromObject(hero);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+
+        if (size.y > 0) {
+          hero.scale.setScalar(2.8 / size.y);
+        }
+
+        hero.position.set(
+          -center.x * hero.scale.x,
+          -box.min.y * hero.scale.y,
+          -center.z * hero.scale.z
+        );
+
+        this.player.group.children.forEach((child) => {
+          if (
+            child !== this.player.shadow &&
+            child !== this.player.weapon
+          ) {
+            child.visible = false;
+          }
+        });
+
+        this.player.group.add(hero);
+        this.heroModel = hero;
+
+        this.heroMixer = new THREE.AnimationMixer(hero);
+
+        if (gltf.animations.length > 0) {
+          const idle =
+            gltf.animations.find((clip) =>
+              /idle/i.test(clip.name)
+            ) ?? gltf.animations[0];
+
+          this.heroMixer.clipAction(idle).play();
+        }
+
+        console.log("Héros 3D chargé !");
+      },
+      undefined,
+      (error) => {
+        console.error("Erreur de chargement du héros :", error);
+      }
+    );
+      }
+      );
+  }
+
   private async loadCannonAsset(): Promise<void> {
     try {
       const path = "/assets/cannon/asset.mjs";
@@ -280,7 +338,8 @@ private heroModel?: THREE.Group;
 
   private update(dt: number): void {
     if (this.stopped) return;
-    this.visualTime += dt;
+        this.visualTime += dt;
+    this.heroMixer?.update(dt);
     this.world.update(this.visualTime);
     this.handleGlobalInput();
     this.announcementTimer = Math.max(0, this.announcementTimer - dt);
