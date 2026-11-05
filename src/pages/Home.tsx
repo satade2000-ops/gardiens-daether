@@ -75,7 +75,10 @@ export default function Home() {
   const [snapshot, setSnapshot] = useState<GameSnapshot>(INITIAL);
   const [bestScore, setBestScore] = useState<number>(getBestScore);
   const [rewardNotification, setRewardNotification] = useState<string | null>(null);
-const previousRewards = useRef<string[]>([]);
+const previousRewards = useRef<string[]>(
+  REWARDS.filter((reward) => getBestScore() >= reward.score)
+    .map((reward) => reward.name)
+);
   const unlockedRewards = REWARDS.filter(
   (reward) => bestScore >= reward.score
 );
