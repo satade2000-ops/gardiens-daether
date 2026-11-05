@@ -240,6 +240,7 @@ export class AetherGame {
         this.heroModel = hero;
 
         this.heroMixer = new THREE.AnimationMixer(hero);
+        console.log("ANIMATIONS DISPONIBLES :", gltf.animations.map(a => a.name));
 
         if (gltf.animations.length > 0) {
           const idle =
