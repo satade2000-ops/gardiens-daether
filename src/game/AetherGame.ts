@@ -67,8 +67,8 @@ export class AetherGame {
   private particles: ParticleSystem;
   private machine = new GameStateMachine();
   private loop: GameLoop;
-  private player: ActorModel;
-    private heroMixer?: THREE.AnimationMixer;
+    private player: ActorModel;
+  private heroMixer?: THREE.AnimationMixer;
   private heroModel?: THREE.Group;
   private enemies: Enemy[] = [];
   private playerShots: Projectile[] = [];
