@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { AudioSystem } from "./audio";
 import { COLORS, GAME_CONFIG, QUALITY, WAVE_TABLE } from "./config";
 import { ParticleSystem } from "./effects";
