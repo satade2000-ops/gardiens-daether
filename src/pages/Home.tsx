@@ -6,6 +6,12 @@ import { trpc } from "@/providers/trpc";
 import type { AetherGame } from "@/game/AetherGame";
 import type { GameSnapshot } from "@/game/types";
 const BEST_SCORE_KEY = "aether_best_score";
+const REWARDS = [
+  { name: "Bronze", score: 1000, icon: "🥉" },
+  { name: "Argent", score: 5000, icon: "🥈" },
+  { name: "Or", score: 10000, icon: "🥇" },
+  { name: "Diamant", score: 20000, icon: "💎" },
+];
 
 function getBestScore(): number {
   try {
@@ -52,10 +58,7 @@ function VirtualStick({ kind, label }: { kind: "move" | "aim"; label: string }) 
     else dispatch("aether-aim", { x: 0, z: 0, firing: false });
   };
   return (
-    <div className="personal-record">
-  🏆 RECORD PERSONNEL :{" "}
-  <strong>{bestScore.toLocaleString("fr-FR")}</strong>
-</div>
+    
     <div className={`virtual-stick ${kind}`} ref={base}
       onPointerDown={(e) => { e.preventDefault(); active.current = e.pointerId; e.currentTarget.setPointerCapture(e.pointerId); update(e.clientX, e.clientY); }}
       onPointerMove={(e) => { if (active.current === e.pointerId) update(e.clientX, e.clientY); }}
@@ -78,12 +81,7 @@ export default function Home() {
 const nextReward = REWARDS.find(
   (reward) => bestScore < reward.score
 );
-  const REWARDS = [
-  { name: "Bronze", score: 1000, icon: "🥉" },
-  { name: "Argent", score: 5000, icon: "🥈" },
-  { name: "Or", score: 10000, icon: "🥇" },
-  { name: "Diamant", score: 20000, icon: "💎" },
-];
+  
   const game = gameRef.current;
   const auth = useAuth();
   const utils = trpc.useUtils();
@@ -187,6 +185,28 @@ useEffect(() => {
     🏆 Ton meilleur score : <strong>{bestScore.toLocaleString("fr-FR")}</strong>
   </p>
 )}
+           <div className="rewards-panel">
+  <h3>🏆 MES RÉCOMPENSES</h3>
+
+  {unlockedRewards.length === 0 && (
+    <p>Aucune récompense débloquée. Continue à jouer !</p>
+  )}
+
+  {unlockedRewards.map((reward) => (
+    <p key={reward.name}>
+      {reward.icon} {reward.name} — Débloqué !
+    </p>
+  ))}
+
+  {nextReward ? (
+    <p>
+      Prochain objectif : {nextReward.icon} {nextReward.name}
+      ({nextReward.score.toLocaleString("fr-FR")} points)
+    </p>
+  ) : (
+    <p>💎 Toutes les récompenses sont débloquées !</p>
+  )}
+</div>
             <small className="keyboard-start">ou appuie sur ESPACE</small>
           </section>
           <div className="title-sidebar">
