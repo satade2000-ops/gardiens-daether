@@ -68,6 +68,8 @@ export class AetherGame {
   private machine = new GameStateMachine();
   private loop: GameLoop;
   private player: ActorModel;
+  private heroMixer?: THREE.AnimationMixer;
+private heroModel?: THREE.Group;
   private enemies: Enemy[] = [];
   private playerShots: Projectile[] = [];
   private enemyShots: Projectile[] = [];
@@ -137,6 +139,7 @@ export class AetherGame {
     this.world = createWorld(this.scene);
     this.player = createPlayerModel();
     this.scene.add(this.player.group);
+    this.loadHeroAsset();
     this.particles = new ParticleSystem(this.scene);
     this.createPools();
     this.input = new Input(canvas);
