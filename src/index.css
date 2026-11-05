@@ -234,3 +234,32 @@ kbd { margin-right: 6px; padding: 4px 6px; border: 1px solid rgba(140,245,228,.2
   color: var(--gold);
   background: rgba(255, 211, 108, .08);
 }
+/* NOTIFICATION DES TROPHÉES */
+.reward-notification {
+  position: fixed;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 18px 28px;
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+  background: linear-gradient(145deg, #173d48, #102630);
+  color: var(--gold);
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(255, 211, 108, .4);
+  animation: rewardPop 0.6s ease-out;
+}
+
+@keyframes rewardPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -30px) scale(.7);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
