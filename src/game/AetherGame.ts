@@ -250,15 +250,13 @@ export class AetherGame {
           this.heroMixer.clipAction(idle).play();
         }
 
-        console.log("Héros 3D chargé !");
+                console.log("Héros 3D chargé !");
       },
       undefined,
       (error) => {
         console.error("Erreur de chargement du héros :", error);
       }
     );
-      }
-      );
   }
 
   private async loadCannonAsset(): Promise<void> {
