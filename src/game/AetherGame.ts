@@ -147,7 +147,11 @@ export class AetherGame {
     this.resize();
     window.addEventListener("resize", this.resize);
     this.loop = new GameLoop({ update: (dt) => this.update(dt), render: () => this.render() });
-    this.machine.onChange(() => this.emitSnapshot());
+    this.machine.onChange(() => {
+  this.syncMusic();
+  this.emitSnapshot();
+});
+this.syncMusic();
     this.loop.start();
     this.installDebugHooks();
   }
@@ -318,7 +322,21 @@ export class AetherGame {
     this.machine.transition("title");
   }
   toggleMute(): void { this.audio.toggleMute(); this.emitSnapshot(); }
+private syncMusic(): void {
+  const state = this.machine.state;
 
+  if (state === "title" || state === "victory" || state === "gameover") {
+    this.audio.playMusic("menu");
+    return;
+  }
+
+  if (state === "playing" && (this.enemies.length > 0 || this.pendingSpawns.length > 0)) {
+    this.audio.playMusic("combat");
+    return;
+  }
+
+  this.audio.playMusic("exploration");
+}
   private startWave(number: number): void {
     this.wave = number;
     this.pendingSpawns.length = 0;
@@ -342,6 +360,7 @@ export class AetherGame {
     this.heroMixer?.update(dt);
     this.world.update(this.visualTime);
     this.handleGlobalInput();
+    this.syncMusic();
     this.announcementTimer = Math.max(0, this.announcementTimer - dt);
     if (this.announcementTimer === 0) this.announcement = "";
     this.particles.update(dt);
