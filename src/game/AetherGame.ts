@@ -240,6 +240,8 @@ export class AetherGame {
         this.heroModel = hero;
 
         this.heroMixer = new THREE.AnimationMixer(hero);
+        document.title = "HÉROS 3D CHARGÉ";
+console.log("ANIMATIONS :", gltf.animations.map(a => a.name));
         document.title = "ANIMATIONS : " + gltf.animations.map(a => a.name).join(", ");
         console.log("ANIMATIONS DISPONIBLES :", gltf.animations.map(a => a.name));
 
