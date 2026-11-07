@@ -1,6 +1,6 @@
 export type SfxId =
   | "shot" | "dash" | "pulse" | "hit" | "hurt"
-  | "pickup" | "ui" | "explosion" | "win" | "lose" | "wave";
+| "pickup" | "ui" | "explosion" | "win" | "lose" | "wave" | "footstep";
 
 export type MusicTrack = "menu" | "exploration" | "combat";
 
