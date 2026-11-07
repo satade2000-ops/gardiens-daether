@@ -157,7 +157,7 @@ export class AudioSystem {
       SfxId,
       [OscillatorType, number, number, number, number]
     > = {
-      shot: ["square", 480, 190, 0.09, 0.09],
+shot: ["sawtooth", 720, 110, 0.12, 0.13],
       dash: ["sawtooth", 170, 620, 0.16, 0.12],
       pulse: ["sine", 120, 720, 0.35, 0.18],
       hit: ["square", 180, 80, 0.08, 0.13],
