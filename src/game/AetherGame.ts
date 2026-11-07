@@ -580,7 +580,10 @@ if (radius > 100) {
         pos.x += enemy.vx * dt; pos.z += enemy.vz * dt;
       }
       const er = Math.hypot(pos.x, pos.z);
-      if (er > GAME_CONFIG.ARENA_RADIUS) { pos.x *= GAME_CONFIG.ARENA_RADIUS / er; pos.z *= GAME_CONFIG.ARENA_RADIUS / er; }
+if (er > 100) {
+  pos.x *= 100 / er;
+  pos.z *= 100 / er;
+}
       enemy.model.group.rotation.y = Math.atan2(-nx, -nz);
       if (dist < enemy.radius + 0.75 && enemy.hitCooldown <= 0) {
         const damage = enemy.type === "boss" ? 24 : enemy.type === "minion" ? 7 : enemy.type === "charger" ? 14 : 10;
