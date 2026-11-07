@@ -65,7 +65,7 @@ root.add(extendedGround);
   }
 
   const dummy = new THREE.Object3D();
-  const treeCount = 34;
+const treeCount = 120;
   const trunks = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.16, 0.28, 1.7, 6), mat(0x78513c), treeCount);
   const crowns = new THREE.InstancedMesh(new THREE.ConeGeometry(1.15, 3.4, 7), mat(0x2f9270), treeCount);
   // Small instanced scenery keeps its contact lighting without a separate
@@ -73,7 +73,7 @@ root.add(extendedGround);
   trunks.castShadow = crowns.castShadow = false;
   for (let i = 0; i < treeCount; i++) {
     const a = random() * Math.PI * 2;
-    const r = 15 + random() * 5.2;
+const r = 24 + random() * 65;
     const s = 0.72 + random() * 0.65;
     const x = Math.sin(a) * r, z = Math.cos(a) * r;
     dummy.position.set(x, 0.95 * s, z); dummy.scale.setScalar(s); dummy.rotation.y = random() * 6.28; dummy.updateMatrix();
