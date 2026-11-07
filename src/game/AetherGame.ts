@@ -451,6 +451,11 @@ private syncMusic(): void {
     const radius = Math.hypot(this.px, this.pz);
     if (radius > GAME_CONFIG.ARENA_RADIUS) { this.px *= GAME_CONFIG.ARENA_RADIUS / radius; this.pz *= GAME_CONFIG.ARENA_RADIUS / radius; }
     this.movePhase += dt * Math.hypot(mx, mz) * speed * 1.4;
+    if (len > 0.15 && this.dashTime <= 0) {
+  if (Math.floor(this.movePhase / 1.8) !== Math.floor((this.movePhase - dt * len * speed * 1.4) / 1.8)) {
+    this.audio.sfx("footstep");
+  }
+    }
     if ((this.input.consumeAction("KeyE") || this.input.consumeAction("pulse")) && this.pulseCooldown <= 0 && this.energy >= GAME_CONFIG.PULSE_COST) {
       this.energy -= GAME_CONFIG.PULSE_COST;
       this.pulseCooldown = 3.2;
