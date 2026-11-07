@@ -41,7 +41,14 @@ export function createWorld(scene: THREE.Scene): World {
   top.position.y = 0.05;
   top.receiveShadow = true;
   root.add(top);
-
+const extendedGround = new THREE.Mesh(
+  new THREE.PlaneGeometry(220, 220),
+  grass
+);
+extendedGround.rotation.x = -Math.PI / 2;
+extendedGround.position.y = 0.275;
+extendedGround.receiveShadow = true;
+root.add(extendedGround);
   const pathMat = mat(0xd6c797);
   const path = new THREE.Mesh(new THREE.RingGeometry(5.5, 6.15, 48), pathMat);
   path.rotation.x = -Math.PI / 2;
