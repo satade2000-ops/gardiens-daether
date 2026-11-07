@@ -92,7 +92,7 @@ root.add(extendedGround);
   );
 
   const forestCrowns = new THREE.InstancedMesh(
-    new THREE.ConeGeometry(1.4, 4, 7),
+new THREE.IcosahedronGeometry(1.8, 1)
     mat(0x176b45),
     forestCount
   );
