@@ -82,7 +82,41 @@ root.add(extendedGround);
     crowns.setMatrixAt(i, dummy.matrix);
   }
   root.add(trunks, crowns);
+  // Première zone de forêt
+  const forestCount = 22;
 
+  const forestTrunks = new THREE.InstancedMesh(
+    new THREE.CylinderGeometry(0.18, 0.3, 2, 6),
+    mat(0x68452f),
+    forestCount
+  );
+
+  const forestCrowns = new THREE.InstancedMesh(
+    new THREE.ConeGeometry(1.4, 4, 7),
+    mat(0x176b45),
+    forestCount
+  );
+
+  forestTrunks.castShadow = false;
+  forestCrowns.castShadow = false;
+
+  for (let i = 0; i < forestCount; i++) {
+    const x = 35 + random() * 22;
+    const z = 12 + random() * 28;
+    const s = 0.8 + random() * 0.6;
+
+    dummy.position.set(x, s, z);
+    dummy.scale.setScalar(s);
+    dummy.rotation.y = random() * 6.28;
+    dummy.updateMatrix();
+    forestTrunks.setMatrixAt(i, dummy.matrix);
+
+    dummy.position.set(x, 3 * s, z);
+    dummy.updateMatrix();
+    forestCrowns.setMatrixAt(i, dummy.matrix);
+  }
+
+  root.add(forestTrunks, forestCrowns);
   const rockCount = 40;
   const rocks = new THREE.InstancedMesh(new THREE.DodecahedronGeometry(0.75, 0), stone, rockCount);
   rocks.castShadow = false;
