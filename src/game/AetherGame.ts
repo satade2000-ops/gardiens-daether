@@ -611,7 +611,7 @@ if (er > 100) {
       if (!shot.alive) continue;
       shot.life -= dt; shot.mesh.position.x += shot.vx * dt; shot.mesh.position.z += shot.vz * dt;
       shot.mesh.rotation.y += dt * 12;
-      if (shot.life <= 0 || Math.hypot(shot.mesh.position.x, shot.mesh.position.z) > 24) { this.deactivateShot(shot); continue; }
+      if (shot.life <= 0 || Math.hypot(shot.mesh.position.x - this.px, shot.mesh.position.z - this.pz) > 40) { this.deactivateShot(shot); continue; }
       for (const enemy of this.enemies) {
         if (!enemy.alive) continue;
         const pos = enemy.model.group.position;
