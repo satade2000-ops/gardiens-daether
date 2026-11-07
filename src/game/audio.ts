@@ -167,7 +167,8 @@ export class AudioSystem {
       explosion: ["sawtooth", 110, 28, 0.38, 0.2],
       win: ["sine", 523, 1046, 0.65, 0.2],
       lose: ["sawtooth", 220, 55, 0.65, 0.18],
-      wave: ["triangle", 260, 780, 0.35, 0.16],
+  wave: ["triangle", 260, 780, 0.35, 0.16],
+footstep: ["triangle", 95, 45, 0.055, 0.07],
     };
 
     this.tone(...spec[id]);
