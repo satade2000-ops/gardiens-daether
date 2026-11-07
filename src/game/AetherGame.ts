@@ -449,7 +449,10 @@ private syncMusic(): void {
       this.px += mx * speed * dt; this.pz += mz * speed * dt;
     }
     const radius = Math.hypot(this.px, this.pz);
-    if (radius > GAME_CONFIG.ARENA_RADIUS) { this.px *= GAME_CONFIG.ARENA_RADIUS / radius; this.pz *= GAME_CONFIG.ARENA_RADIUS / radius; }
+if (radius > 100) {
+  this.px *= 100 / radius;
+  this.pz *= 100 / radius;
+}
     this.movePhase += dt * Math.hypot(mx, mz) * speed * 1.4;
     if (len > 0.15 && this.dashTime <= 0) {
   if (Math.floor(this.movePhase / 1.8) !== Math.floor((this.movePhase - dt * len * speed * 1.4) / 1.8)) {
